@@ -7,9 +7,11 @@ public class AmazonSearch {
 	public static void main(String[] args) {
 		//check arguments
 		
-		String fileName = "test.json";
+		String reviewFileName = "testreview.json";
+		String qaFileName = "testqa.json";
 		AmazonFileHandling file = new AmazonFileHandling();
-		ArrayList<Review> reviewList = file.readFile(fileName);
+		ArrayList<Review> reviewList = file.readReviewFile(reviewFileName);
+		ArrayList<QA> qaList = file.readQAFile(qaFileName);
 		
 		
 	}
