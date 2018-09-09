@@ -10,8 +10,8 @@ public class AmazonSearch {
 		String reviewFileName = "testreview.json";
 		String qaFileName = "testqa.json";
 		AmazonFileHandling file = new AmazonFileHandling();
-		ArrayList<Review> reviewList = file.readReviewFile(reviewFileName);
-		ArrayList<QA> qaList = file.readQAFile(qaFileName);
+		ArrayList<CustomerEngagement> reviewlist = file.readFile(reviewFileName, "review");
+		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
 		
 		
 	}

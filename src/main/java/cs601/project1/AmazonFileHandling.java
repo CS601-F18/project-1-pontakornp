@@ -80,4 +80,50 @@ public class AmazonFileHandling {
 		return qaList;
 	}
 	
+	/**
+	 * Reads from a file in the project directory given the file name, and return void
+	 * 
+	 * @param fileName - expects the name of the input file
+	 * @param customerEngagmentType - expects either "review" or "qa"
+	 */
+	public ArrayList<CustomerEngagement> readFile(String fileName, String customerEngagementType) {
+		
+		if(customerEngagementType != "review" && customerEngagementType != "qa") {
+			return null;
+		}
+		
+		CustomerEngagement ce;
+		
+		
+		Charset cs = Charset.forName("ISO-8859-1");
+		Path path = Paths.get(fileName);
+		
+		// create gson object to keep json object
+		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
+		try(
+			BufferedReader reader = Files.newBufferedReader(path, cs);
+				){
+			
+			// initializes necessary variables: gson, line, and review to use while looping the json file 
+			Gson gson = new Gson(); // create gson object to 
+			String line = "";
+			while((line = reader.readLine()) != null) {
+				
+				if(customerEngagementType == "review") {
+					ce = gson.fromJson(line, Review.class); // parse json to Review object
+				} else {
+					ce = gson.fromJson(line, QA.class); // parse json to QA object
+				}
+				
+				System.out.println(ce.toString());
+				list.add(ce);
+			}
+			return list;
+		}
+		catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return list;
+	}
+	
 }

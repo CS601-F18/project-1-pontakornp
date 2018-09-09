@@ -19,4 +19,8 @@ public abstract class CustomerEngagement {
 	public void setASIN(String asin) {
 		this.asin = asin;
 	}
+	
+	public String toString() {
+		return "asin: " + asin;
+	}
 }
