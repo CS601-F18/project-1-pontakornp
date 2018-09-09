@@ -10,28 +10,32 @@ public class InvertedIndex {
 	
 	// print all review list and qa list that asin matches
 	public void find(String asin) {
-		
+		System.out.println("");
 	}
 	
-	// search for input term from review list
+	// search for input term from review list and print out
 	public void reviewSearch(String term) {
-		
+		System.out.println("");
 	}
 	
-	// search for input term from qa list
+	// search for input term from qa list and print out
 	public void qaSearch(String term) {
-		
+		System.out.println("");
 	}
 	
-	// do a partial search for input term from review list
+	// do a partial search for input term from review list and print out
 	public void reviewPartialSearch(String term) {
-		
+		System.out.println("");
 	}
 	
-	// do a partial search for input term from qa list
+	// do a partial search for input term from qa list and print out
 	public void qaPartialSearch(String term) {
+		System.out.println("");
+	}
+	
+	// sort map
+	public void sortMap() {
 		
 	}
 	
-	// sort 
 }

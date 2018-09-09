@@ -31,9 +31,12 @@ public class AmazonFileHandling {
 		Path path = Paths.get(fileName);
 		
 		CustomerEngagement ce;
-		
+		InvertedIndex textFreqMap = new InvertedIndex();
 		// create gson object to keep json object
 		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
+		
+		String reviews = "";
+		String qa = "";
 		try(
 			BufferedReader reader = Files.newBufferedReader(path, cs);
 				){
@@ -44,12 +47,16 @@ public class AmazonFileHandling {
 				
 				if(customerEngagementType == "review") {
 					ce = gson.fromJson(line, Review.class); // parse json to Review object
+					
 				} else {
 					ce = gson.fromJson(line, QA.class); // parse json to QA object
 				}
 				
 				System.out.println(ce.toString());
 				list.add(ce);
+				
+				r
+				
 			}
 			return list;
 		}
