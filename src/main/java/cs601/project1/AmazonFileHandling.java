@@ -21,7 +21,7 @@ public class AmazonFileHandling {
 	 * @param fileName - expects the name of the input file
 	 * @param customerEngagmentType - expects either "review" or "qa"
 	 */
-	public ArrayList<CustomerEngagement> readFile(String fileName, String customerEngagementType) {
+	public InvertedIndex readFile(String fileName, String customerEngagementType) {
 		
 		if(customerEngagementType != "review" && customerEngagementType != "qa") {
 			return null;
@@ -32,9 +32,9 @@ public class AmazonFileHandling {
 		
 		CustomerEngagement ce;
 		
-		InvertedIndex textFreqMap = new InvertedIndex();
+		InvertedIndex index = new InvertedIndex();
 		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
-		HashMap<String, ArrayList<CustomerEngagement>> map = textFreqMap.getMap();
+		HashMap<String, ArrayList<CustomerEngagement>> map = index.getMap();
 		
 //		String reviews = "";
 //		String qa = "";
@@ -49,27 +49,20 @@ public class AmazonFileHandling {
 			Gson gson = new Gson();
 			String line = "";
 			while((line = reader.readLine()) != null) {
-				
 				if(customerEngagementType == "review") {
 					review = gson.fromJson(line, Review.class); // parse json to Review object
-					terms = textFreqMap.cleanText(review);
-					ce = review;
-					textFreqMap.putTermsAndList(terms, ce);
-					
+					index.putReviewIndex(review);
 				} else {
-					ce = gson.fromJson(line, QA.class); // parse json to QA object
+					qa = gson.fromJson(line, QA.class); // parse json to QA object
+					index.putQAIndex(qa);
 				}
-				
-				System.out.println(ce.toString());
-				list.add(ce);
-				new ArrayList<CustomerEngagement>();
 			}
-			return list;
+			return index;
 		}
 		catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
-		return list;
+		return index;
 	}
 	
 }

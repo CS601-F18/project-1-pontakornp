@@ -21,9 +21,10 @@ public class AmazonSearch {
 //		String reviewFileName = "testreview.json";
 //		String qaFileName = "testqa.json";
 		AmazonFileHandling file = new AmazonFileHandling();
-		ArrayList<CustomerEngagement> reviewlist = file.readFile(reviewFileName, "review");
-		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
-		
+//		ArrayList<CustomerEngagement> reviewlist = file.readFile(reviewFileName, "review");
+//		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
+		InvertedIndex reviewIndex = file.readFile(reviewFileName, "review");
+		InvertedIndex qaIndex = file.readFile(qaFileName, "qa");
 		
 	}
 

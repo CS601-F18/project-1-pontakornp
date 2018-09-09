@@ -29,7 +29,7 @@ public class InvertedIndex {
 		System.out.println("");
 	}
 	
-	// search for input term from qa list and print out
+	// search for input term from question and answer lists and print out
 	public void qaSearch(String term) {
 		System.out.println("");
 	}
@@ -50,12 +50,12 @@ public class InvertedIndex {
 	}
 	
 	/**
-	 * put terms and array list into map
+	 * put terms and array list of reviews into map
 	 * 
-	 * @param terms - array of terms
-	 * @param ce - customer engagement object
+	 * @param review - Review object
 	 */
-	public void putTermsAndList(String[] terms, CustomerEngagement ce){
+	public void putReviewIndex(Review review){
+		String[] terms = cleanReviewText(review);
 		ArrayList<CustomerEngagement> list;
 		for(String term: terms) {
 			if(map.containsKey(term)) {
@@ -63,7 +63,26 @@ public class InvertedIndex {
 			} else {
 				list = new ArrayList<CustomerEngagement>();
 			}
-			list.add(ce);
+			list.add(review);
+			map.put(term, list);
+		}
+	}
+	
+	/**
+	 * put terms and array list of qa into map
+	 * 
+	 * @param qa - QA object
+	 */
+	public void putQAIndex(QA qa){
+		String[] terms = cleanQAText(qa);
+		ArrayList<CustomerEngagement> list;
+		for(String term: terms) {
+			if(map.containsKey(term)) {
+				list = map.get(term);
+			} else {
+				list = new ArrayList<CustomerEngagement>();
+			}
+			list.add(qa);
 			map.put(term, list);
 		}
 	}
@@ -72,13 +91,34 @@ public class InvertedIndex {
 	 * clean review text (separate words by white space, remove all non-alphanumeric characters, and convert the string to lower case)
 	 * 
 	 * @param review
-	 * @return array of words
+	 * @return arrays of terms
 	 */
-	public String[] cleanText(Review review) {
+	public String[] cleanReviewText(Review review) {
 		String reviewText = review.getReviewText();
-		reviewText = reviewText.replaceAll("[^A-Za-z0-9 ]", ""); // remove all non-alphanumeric characters
-		reviewText = reviewText.toLowerCase(); // convert to lower case
-		String[] terms = reviewText.split(" "); // separate words by white space
+		return cleanText(reviewText);
+	}
+	
+	/**
+	 * clean review text (separate words by white space, remove all non-alphanumeric characters, and convert the string to lower case)
+	 * 
+	 * @param qa
+	 * @return array of terms
+	 */
+	public String[] cleanQAText(QA qa) {
+		String question = qa.getQueston();
+		String answer = qa.getAnswer();
+		return cleanText(question + answer);
+	}
+	
+	/**
+	 * helper method for cleanReviewText and cleanQAText
+	 * @param text
+	 * @return arrays of terms after cleaning
+	 */
+	public String[] cleanText(String text) {
+		text = text.replace("[^A-Za-z0-9 ]", ""); // remove all non-alphanumeric characters
+		text = text.toLowerCase(); // convert to lower case
+		String[] terms = text.split(" "); // separate words by white space
 		return terms;
 	}
 	
