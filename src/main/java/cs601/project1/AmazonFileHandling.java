@@ -41,7 +41,7 @@ public class AmazonFileHandling {
 		
 		Review review;
 		QA qa;
-		String[] words;
+		String[] terms;
 		try(
 			BufferedReader reader = Files.newBufferedReader(path, cs);
 				){
@@ -52,16 +52,10 @@ public class AmazonFileHandling {
 				
 				if(customerEngagementType == "review") {
 					review = gson.fromJson(line, Review.class); // parse json to Review object
+					terms = textFreqMap.cleanText(review);
 					ce = review;
-					words = textFreqMap.cleanText(review);
+					textFreqMap.putTermsAndList(terms, ce);
 					
-					for(String w: words) {
-						if(map.containsKey(w)) {
-							list = map.get(w);
-						}
-						list.add(ce);
-						map.put(w, list);
-					}
 				} else {
 					ce = gson.fromJson(line, QA.class); // parse json to QA object
 				}
