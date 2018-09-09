@@ -38,7 +38,7 @@ public class AmazonFileHandling {
 			BufferedReader reader = Files.newBufferedReader(path, cs);
 				){
 			// initializes necessary variables: gson, line, and review to use while looping the json file 
-			Gson gson = new Gson(); // create gson object to 
+			Gson gson = new Gson();
 			String line = "";
 			while((line = reader.readLine()) != null) {
 				
