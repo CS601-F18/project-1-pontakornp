@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,17 +27,21 @@ public class AmazonFileHandling {
 			return null;
 		}
 		
-		
 		Charset cs = Charset.forName("ISO-8859-1");
 		Path path = Paths.get(fileName);
 		
 		CustomerEngagement ce;
-		InvertedIndex textFreqMap = new InvertedIndex();
-		// create gson object to keep json object
-		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
 		
-		String reviews = "";
-		String qa = "";
+		InvertedIndex textFreqMap = new InvertedIndex();
+		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
+		HashMap<String, ArrayList<CustomerEngagement>> map = textFreqMap.getMap();
+		
+//		String reviews = "";
+//		String qa = "";
+		
+		Review review;
+		QA qa;
+		String[] words;
 		try(
 			BufferedReader reader = Files.newBufferedReader(path, cs);
 				){
@@ -46,17 +51,24 @@ public class AmazonFileHandling {
 			while((line = reader.readLine()) != null) {
 				
 				if(customerEngagementType == "review") {
-					ce = gson.fromJson(line, Review.class); // parse json to Review object
+					review = gson.fromJson(line, Review.class); // parse json to Review object
+					ce = review;
+					words = textFreqMap.cleanText(review);
 					
+					for(String w: words) {
+						if(map.containsKey(w)) {
+							list = map.get(w);
+						}
+						list.add(ce);
+						map.put(w, list);
+					}
 				} else {
 					ce = gson.fromJson(line, QA.class); // parse json to QA object
 				}
 				
 				System.out.println(ce.toString());
 				list.add(ce);
-				
-				r
-				
+				new ArrayList<CustomerEngagement>();
 			}
 			return list;
 		}
