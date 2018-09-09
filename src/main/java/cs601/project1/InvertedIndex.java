@@ -122,9 +122,4 @@ public class InvertedIndex {
 		return terms;
 	}
 	
-	
-	// clean qa text (separate words by white space, remove all non-alphanumeric characters, and convert the string to lower case)
-	
-	
-	
 }
