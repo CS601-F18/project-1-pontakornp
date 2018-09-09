@@ -1,29 +1,20 @@
 package cs601.project1;
 
-public class QA {
-	
-	private String asin;
+public class QA extends CustomerEngagement {
+
 	private String question;
 	private String answer;
 	
 	public QA() {
-		asin = "";
+		super("");
 		question = "";
 		answer = "";
 	}
 	
 	public QA(String asin, String question, String answer) {
-		this.asin = asin;
+		super(asin);
 		this.question = question;
 		this.answer = answer;
-	}
-	
-	public String getASIN() {
-		return asin;
-	}
-	
-	public void setASIN(String value) {
-		asin = value;
 	}
 	
 	public String getQueston() {

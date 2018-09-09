@@ -1,33 +1,25 @@
 package cs601.project1;
 
-public class Review {
-	
-	private String asin;
+public class Review extends CustomerEngagement{
+
 	private String reviewText;
 
 	public Review() {
-		asin = "";
+		super("");
 		reviewText = "";
 	}
 	
 	public Review(String asin, String reviewText) {
-		this.asin = asin;
+		super(asin);
 		this.reviewText = reviewText;
 	}
 	
-	public String getASIN() {
-		return asin;
-	}
-	public void setASIN(String value) {
-		asin = value;
-	}
-	
 	public String getReviewText() {
-		return reviewText;
+		return this.reviewText;
 	}
 	
 	public void setReviewText(String value) {
-		reviewText = value;
+		this.reviewText = value;
 	}
 	
 	public String toString() {
