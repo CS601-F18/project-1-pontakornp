@@ -42,6 +42,7 @@ public class AmazonSearch {
 				System.out.println("Type \"help\" to list out all commands");
 				System.out.print("Please type your command: ");
 				text = scanner.nextLine();
+				System.out.println("");
 				fileHandling.callUserInputFunction(text, reviewIndex, qaIndex);
 			}
 		} catch (Exception e) {
