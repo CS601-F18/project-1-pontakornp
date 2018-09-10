@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class AmazonSearch {
 
 	public static void main(String[] args) {
+		long start = System.currentTimeMillis();
 		//check arguments
 		if(args.length != 4 || !args[0].equals("-reviews") || !args[2].equals("-qa")) {
 			System.out.println("Incorrect input format, please try again.");
@@ -18,8 +19,10 @@ public class AmazonSearch {
 		String reviewFileName = args[1];
 		String qaFileName = args[3];
 		
-//		String reviewFileName = "testreview.json";
-//		String qaFileName = "testqa.json";
+//		reviewFileName = "testreview.json";
+//		qaFileName = "testqa.json";
+//		reviewFileName = "reviews_Cell_Phones_and_Accessories_5.json";
+//		qaFileName = "qa_Cell_Phones_and_Accessories.json";
 		AmazonFileHandling fileHandling = new AmazonFileHandling();
 //		ArrayList<CustomerEngagement> reviewlist = file.readFile(reviewFileName, "review");
 //		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
@@ -29,12 +32,15 @@ public class AmazonSearch {
 //		reviewIndex.find("120401325X");
 //		qaIndex.find("1466736038");
 		
-		
+		long end = System.currentTimeMillis();
+		System.out.println("Time: " + Math.round((end-start)/1000) + " seconds" );
 		try(
 			Scanner scanner = new Scanner(System.in);
 		){
 			String text = "";
 			while(!text.equals("exit")) {
+				System.out.println("Type \"help\" to list out all commands");
+				System.out.print("Please type your command: ");
 				text = scanner.nextLine();
 				fileHandling.callUserInputFunction(text, reviewIndex, qaIndex);
 			}

@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 public class AmazonFileHandling {
 
@@ -49,12 +50,18 @@ public class AmazonFileHandling {
 			Gson gson = new Gson();
 			String line = "";
 			while((line = reader.readLine()) != null) {
-				if(customerEngagementType == "review") {
-					review = gson.fromJson(line, Review.class); // parse json to Review object
-					index.putReviewIndex(review);
-				} else {
-					qa = gson.fromJson(line, QA.class); // parse json to QA object
-					index.putQAIndex(qa);
+				try {
+					if(customerEngagementType == "review") {
+						review = gson.fromJson(line, Review.class); // parse json to Review object
+						System.out.println(review);
+						index.putReviewIndex(review);
+					} else {
+						qa = gson.fromJson(line, QA.class); // parse json to QA object
+						System.out.println(qa);
+						index.putQAIndex(qa);
+					}
+				} catch(JsonSyntaxException jse) {
+					// skip
 				}
 			}
 			return index;
@@ -67,12 +74,24 @@ public class AmazonFileHandling {
 	
 	public void callUserInputFunction(String line, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
 		if(line == "") {
-			System.out.println("Please input command in correct format1");
+			System.out.println("Please try again with the correct format");
 			return;
+		} else if(line.equals("help")) {
+			System.out.println("Command List:");
+			System.out.println("\tfind <asin> - print all review and qa lists e.g. find 123456");
+			System.out.println("\treviewsearch <term> - print all review lists that contain term e.g. reviewsearch hello");
+			System.out.println("\tqasearch <term> - print all review lists that contain term e.g. qasearch hello");
+			System.out.println("\tpartialreviewsearch <term> - print all review lists that contain partially matched term e.g. partialreviewsearch hello");
+			System.out.println("\tpartialqasearch <term> - print all review lists that contain partially matched term e.g. partialqasearch hello");
+			System.out.println("\texit - exit this program");
+			return;
+		} else if(line.equals("exit")) {
+			System.out.println("Exit program");
 		}
+		
 		String[] parts = line.split(" ");
 		if(parts.length != 2) {
-			System.out.println("Please input command in correct format2");
+			System.out.println("Please try again with the correct format");
 			return;
 		}
 		String command = parts[0];
@@ -89,7 +108,7 @@ public class AmazonFileHandling {
 		} else if(command.equals("qapartialsearch")) {
 			
 		} else {
-			System.out.println("Please input command in correct format3");
+			System.out.println("Please try again with the correct format");
 		}
 	}
 	

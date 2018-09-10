@@ -35,8 +35,6 @@ public class InvertedIndex {
 			for(CustomerEngagement ce: asinList) {
 				System.out.println(ce.toString());
 			}
-		} else {
-			System.out.println("ASIN not found, please try again.");
 		}
 	}
 	
