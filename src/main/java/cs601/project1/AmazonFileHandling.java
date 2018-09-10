@@ -65,4 +65,32 @@ public class AmazonFileHandling {
 		return index;
 	}
 	
+	public void callUserInputFunction(String line, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
+		if(line == "") {
+			System.out.println("Please input command in correct format1");
+			return;
+		}
+		String[] parts = line.split(" ");
+		if(parts.length != 2) {
+			System.out.println("Please input command in correct format2");
+			return;
+		}
+		String command = parts[0];
+		String text = parts[1];
+		if(command.equals("find")) {
+			reviewIndex.find(text);
+			qaIndex.find(text);
+		} else if(command.equals("reviewsearch")) {
+			
+		} else if(command.equals("qasearch")) {
+			
+		} else if(command.equals("reviewpartialsearch")) {
+			
+		} else if(command.equals("qapartialsearch")) {
+			
+		} else {
+			System.out.println("Please input command in correct format3");
+		}
+	}
+	
 }
