@@ -1,6 +1,6 @@
 package cs601.project1;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class AmazonSearch {
 
@@ -25,6 +25,25 @@ public class AmazonSearch {
 //		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
 		InvertedIndex reviewIndex = file.readFile(reviewFileName, "review");
 		InvertedIndex qaIndex = file.readFile(qaFileName, "qa");
+		
+//		reviewIndex.find("120401325X");
+//		qaIndex.find("1466736038");
+		
+		
+		try(
+			Scanner scanner = new Scanner(System.in);
+		){
+			String text = "";
+			while(!text.equals("exit")) {
+				text = scanner.nextLine();
+				System.out.println(text);
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 

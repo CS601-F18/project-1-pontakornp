@@ -34,7 +34,7 @@ public class AmazonFileHandling {
 		
 		InvertedIndex index = new InvertedIndex();
 		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
-		HashMap<String, ArrayList<CustomerEngagement>> map = index.getMap();
+//		HashMap<String, ArrayList<CustomerEngagement>> map = index.getMap();
 		
 //		String reviews = "";
 //		String qa = "";

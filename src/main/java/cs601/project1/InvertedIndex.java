@@ -2,26 +2,40 @@ package cs601.project1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class InvertedIndex {
 	
-	// map of term and list of customer engagements (review or qa);
-	private HashMap<String, ArrayList<CustomerEngagement>> map;
+	private HashMap<String, ArrayList<CustomerEngagement>> termMap; //  term map of term and list of customer engagements (review or qa);
+	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
 	
 	public InvertedIndex() {
-		this.map = new HashMap<String, ArrayList<CustomerEngagement>>();
+		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
+		this.asinMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 	}
-	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map) {
-		this.map = map;
+	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map, HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
+		this.termMap = map;
+		this.asinMap = asinMap;
 	}
 	
 	public HashMap<String, ArrayList<CustomerEngagement>> getMap() {
-		return this.map;
+		return this.termMap;
+	}
+	
+	public HashMap<String, ArrayList<CustomerEngagement>> getASINMap() {
+		return this.asinMap;
 	}
 	
 	// print all review list and qa list that asin matches
 	public void find(String asin) {
-		System.out.println("");
+		ArrayList<CustomerEngagement> asinList;
+		if(asinMap.containsKey(asin)) {
+			asinList = asinMap.get(asin);
+			for(CustomerEngagement ce: asinList) {
+				System.out.println(ce.toString());
+			}
+		}
 	}
 	
 	// search for input term from review list and print out
@@ -54,18 +68,44 @@ public class InvertedIndex {
 	 * 
 	 * @param review - Review object
 	 */
+//	public void putReviewIndex(Review review){
+//		String[] terms = cleanReviewText(review);
+//		ArrayList<CustomerEngagement> list;
+//		for(String term: terms) {
+//			if(termMap.containsKey(term)) {
+//				list = termMap.get(term);
+//			} else {
+//				list = new ArrayList<CustomerEngagement>();
+//			}
+//			list.add(review);
+//			termMap.put(term, list);
+//		}
+//	}
+	
 	public void putReviewIndex(Review review){
+		
 		String[] terms = cleanReviewText(review);
-		ArrayList<CustomerEngagement> list;
+		String asin = review.getASIN();
+		ArrayList<CustomerEngagement> termList;
+		ArrayList<CustomerEngagement> asinList;
+		
 		for(String term: terms) {
-			if(map.containsKey(term)) {
-				list = map.get(term);
+			if(termMap.containsKey(term)) {
+				termList = termMap.get(term);
 			} else {
-				list = new ArrayList<CustomerEngagement>();
+				termList = new ArrayList<CustomerEngagement>();
 			}
-			list.add(review);
-			map.put(term, list);
+			termList.add(review);
+			termMap.put(term, termList);
 		}
+		
+		if(asinMap.containsKey(asin)) {
+			asinList = asinMap.get(asin);
+		} else {
+			asinList = new ArrayList<CustomerEngagement>();
+		}
+		asinList.add(review);
+		asinMap.put(asin, asinList);
 	}
 	
 	/**
@@ -74,17 +114,30 @@ public class InvertedIndex {
 	 * @param qa - QA object
 	 */
 	public void putQAIndex(QA qa){
+		
 		String[] terms = cleanQAText(qa);
-		ArrayList<CustomerEngagement> list;
+		String asin = qa.getASIN();
+		ArrayList<CustomerEngagement> termList;
+		ArrayList<CustomerEngagement> asinList;
+		
 		for(String term: terms) {
-			if(map.containsKey(term)) {
-				list = map.get(term);
+			if(termMap.containsKey(term)) {
+				termList = termMap.get(term);
+				
 			} else {
-				list = new ArrayList<CustomerEngagement>();
+				termList = new ArrayList<CustomerEngagement>();
 			}
-			list.add(qa);
-			map.put(term, list);
+			termList.add(qa);
+			termMap.put(term, termList);
 		}
+		
+		if(asinMap.containsKey(asin)) {
+			asinList = asinMap.get(asin);
+		} else {
+			asinList = new ArrayList<CustomerEngagement>();
+		}
+		asinList.add(qa);
+		asinMap.put(asin, asinList);
 	}
 	
 	/**
@@ -116,7 +169,7 @@ public class InvertedIndex {
 	 * @return arrays of terms after cleaning
 	 */
 	public String[] cleanText(String text) {
-		text = text.replace("[^A-Za-z0-9 ]", ""); // remove all non-alphanumeric characters
+		text = text.replaceAll("[^A-Za-z0-9 ]", ""); // remove all non-alphanumeric characters
 		text = text.toLowerCase(); // convert to lower case
 		String[] terms = text.split(" "); // separate words by white space
 		return terms;
