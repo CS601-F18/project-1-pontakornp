@@ -19,8 +19,8 @@ public class AmazonSearch {
 		String reviewFileName = args[1];
 		String qaFileName = args[3];
 		
-//		reviewFileName = "testreview.json";
-//		qaFileName = "testqa.json";
+		reviewFileName = "testreview.json";
+		qaFileName = "testqa.json";
 //		reviewFileName = "reviews_Cell_Phones_and_Accessories_5.json";
 //		qaFileName = "qa_Cell_Phones_and_Accessories.json";
 		AmazonFileHandling fileHandling = new AmazonFileHandling();
@@ -33,7 +33,7 @@ public class AmazonSearch {
 //		qaIndex.find("1466736038");
 		
 		long end = System.currentTimeMillis();
-		System.out.println("Time: " + Math.round((end-start)/1000) + " seconds" );
+		System.out.println("Time: " + Math.round((end-start) / 1000) + " seconds" );
 		try(
 			Scanner scanner = new Scanner(System.in);
 		){

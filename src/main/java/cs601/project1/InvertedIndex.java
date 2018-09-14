@@ -2,24 +2,41 @@ package cs601.project1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.LinkedList;
 
 public class InvertedIndex {
 	
-	private HashMap<String, ArrayList<CustomerEngagement>> termMap; //  term map of term and list of customer engagements (review or qa);
+//	private HashMap<String, ArrayList<CustomerEngagement>> termMap; // term map of term and list of customer engagements (review or qa);
+//	private HashMap<String, HashMap<CustomerEngagement, Integer>> termFreqMap; //
+	
 	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
-	
+	private HashMap<String, ArrayList<Integer>> termMap; 
+	private ArrayList<CustomerEngagement> ceList;
+
 	public InvertedIndex() {
-		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
+//		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 		this.asinMap = new HashMap<String, ArrayList<CustomerEngagement>>();
-	}
-	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map, HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
-		this.termMap = map;
-		this.asinMap = asinMap;
+		this.termMap = new HashMap<String, ArrayList<Integer>>();
+		this.ceList = new ArrayList<CustomerEngagement>();
 	}
 	
-	public HashMap<String, ArrayList<CustomerEngagement>> getMap() {
+//	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map, HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
+////		this.termMap = map;
+//		this.asinMap = asinMap;
+//	}
+	
+	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> asinMap, HashMap<String, ArrayList<Integer>> termMap, ArrayList<CustomerEngagement> ceList) {
+//		this.termMap = map;
+		this.asinMap = asinMap;
+		this.termMap = termMap;
+		this.ceList = ceList;
+	}
+	
+//	public HashMap<String, ArrayList<CustomerEngagement>> getMap() {
+//		return this.termMap;
+//	}
+	
+	public HashMap<String, ArrayList<Integer>> getMap() {
 		return this.termMap;
 	}
 	
@@ -41,6 +58,15 @@ public class InvertedIndex {
 	// search for input term from review list and print out
 	public void reviewSearch(String term) {
 		System.out.println("");
+		
+		
+		if(termMap.containsKey(term)) {
+			for(int i = 0; i < termMap.get(term).size(); i++) {
+				
+				int index = termMap.get(term).get(i);
+				System.out.println(ceList.get(index));
+			}
+		}
 	}
 	
 	// search for input term from question and answer lists and print out
@@ -89,16 +115,46 @@ public class InvertedIndex {
 		ArrayList<CustomerEngagement> termList;
 		ArrayList<CustomerEngagement> asinList;
 		
+		ceList.add(review);
+		int ceListIndex = ceList.size()-1;
+		ArrayList<Integer> reviewIndexList = new ArrayList<Integer>();
+		//test new
 		for(String term: terms) {
+			review.incrementTermFreq(term); // increment frequency of each term in Review object
 			if(termMap.containsKey(term)) {
-				termList = termMap.get(term);
+				reviewIndexList = termMap.get(term);
+				if(reviewIndexList.get(reviewIndexList.size() - 1) != ceListIndex) {
+					reviewIndexList.add(ceListIndex);
+				}
 			} else {
-				termList = new ArrayList<CustomerEngagement>();
+				reviewIndexList = new ArrayList<Integer>();
+				reviewIndexList.add(ceListIndex);
+				
 			}
-			termList.add(review);
-			termMap.put(term, termList);
+			termMap.put(term, reviewIndexList);
+		}
+		for(String term: terms) {
+			for(int i: termMap.get(term)) {
+//				if(termMap.get(term).size != null) {
+					System.out.print(term + ": ");
+					System.out.println(ceList.get(i));
+//				}
+				
+			}
 		}
 		
+		
+		// test asinMap
+//		if(asinMap.containsKey(asin)) {
+//			asinList = asinMap.get(asin);
+//			if(asinList.get(asinList.size()-1) == review) {
+//				
+//			}
+//		} else {
+//			asinList = new ArrayList<CustomerEngagement>();
+//		}
+		
+		// asinMap
 		if(asinMap.containsKey(asin)) {
 			asinList = asinMap.get(asin);
 		} else {
@@ -120,16 +176,15 @@ public class InvertedIndex {
 		ArrayList<CustomerEngagement> termList;
 		ArrayList<CustomerEngagement> asinList;
 		
-		for(String term: terms) {
-			if(termMap.containsKey(term)) {
-				termList = termMap.get(term);
-				
-			} else {
-				termList = new ArrayList<CustomerEngagement>();
-			}
-			termList.add(qa);
-			termMap.put(term, termList);
-		}
+//		for(String term: terms) {
+//			if(termMap.containsKey(term)) {
+//				termList = termMap.get(term);
+//			} else {
+//				termList = new ArrayList<CustomerEngagement>();
+//			}
+//			termList.add(qa);
+//			termMap.put(term, termList);
+//		}
 		
 		if(asinMap.containsKey(asin)) {
 			asinList = asinMap.get(asin);

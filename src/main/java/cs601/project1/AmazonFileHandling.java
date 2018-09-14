@@ -53,11 +53,11 @@ public class AmazonFileHandling {
 				try {
 					if(customerEngagementType == "review") {
 						review = gson.fromJson(line, Review.class); // parse json to Review object
-						System.out.println(review);
+//						System.out.println(review);
 						index.putReviewIndex(review);
 					} else {
 						qa = gson.fromJson(line, QA.class); // parse json to QA object
-						System.out.println(qa);
+//						System.out.println(qa);
 						index.putQAIndex(qa);
 					}
 				} catch(JsonSyntaxException jse) {
@@ -77,13 +77,13 @@ public class AmazonFileHandling {
 			System.out.println("Please try again with the correct format");
 			return;
 		} else if(line.equals("help")) {
-			System.out.println("Command List:");
-			System.out.println("\tfind <asin> - print all review and qa lists e.g. find 123456");
-			System.out.println("\treviewsearch <term> - print all review lists that contain term e.g. reviewsearch hello");
-			System.out.println("\tqasearch <term> - print all review lists that contain term e.g. qasearch hello");
-			System.out.println("\tpartialreviewsearch <term> - print all review lists that contain partially matched term e.g. partialreviewsearch hello");
-			System.out.println("\tpartialqasearch <term> - print all review lists that contain partially matched term e.g. partialqasearch hello");
-			System.out.println("\texit - exit this program");
+			System.out.println("Command List:\n"
+					+ "\tfind <asin> - print all review and qa lists e.g. find 1234567890\n"
+					+ "\treviewsearch <term> - print all review lists that contain term e.g. reviewsearch hello\n"
+					+ "\tqasearch <term> - print all review lists that contain term e.g. qasearch hello\n"
+					+ "\tpartialreviewsearch <term> - print all review lists that contain partially matched term e.g. partialreviewsearch hello\n"
+					+ "\tpartialqasearch <term> - print all review lists that contain partially matched term e.g. partialqasearch hello\n"
+					+ "\texit - exit the program\n");
 			return;
 		} else if(line.equals("exit")) {
 			System.out.println("Exit program");
@@ -94,13 +94,13 @@ public class AmazonFileHandling {
 			System.out.println("Please try again with the correct format");
 			return;
 		}
-		String command = parts[0];
-		String text = parts[1];
+		String command = parts[0].toLowerCase();
+		String text = parts[1].toLowerCase();
 		if(command.equals("find")) {
 			reviewIndex.find(text);
 			qaIndex.find(text);
 		} else if(command.equals("reviewsearch")) {
-			
+			reviewIndex.reviewSearch(text);
 		} else if(command.equals("qasearch")) {
 			
 		} else if(command.equals("reviewpartialsearch")) {

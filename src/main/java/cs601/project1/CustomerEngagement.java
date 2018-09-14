@@ -23,4 +23,5 @@ public abstract class CustomerEngagement {
 	public String toString() {
 		return "asin: " + asin;
 	}
+	
 }
