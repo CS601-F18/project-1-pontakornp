@@ -11,25 +11,21 @@ public class InvertedIndex {
 	
 	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
 	
-	
-	private HashMap<String, ArrayList<CustomerEngagement>> termMap2;
-	
-	
-	
-	
-//	private HashMap<String, ArrayList<Integer>> termMap; 
+
+	private HashMap<String, ArrayList<Integer>> termMap; 
 	private ArrayList<CustomerEngagement> ceList;
-	private HashMap<Integer, ArrayList<String>> ceIndexMap;
-	private HashMap<String, ArrayList<CustomerEngagement>> termMap;
-	
-	
+//	private HashMap<Integer, ArrayList<String>> ceIndexMap;
+//	private HashMap<String, ArrayList<CustomerEngagement>> termMap;
+
 	public InvertedIndex() {
 //		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 		this.asinMap = new HashMap<String, ArrayList<CustomerEngagement>>();
-//		this.termMap = new HashMap<String, ArrayList<Integer>>();
+		
+		
+		this.termMap = new HashMap<String, ArrayList<Integer>>();
 		this.ceList = new ArrayList<CustomerEngagement>();
-		this.ceIndexMap = new HashMap<Integer, ArrayList<String>>();
-		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
+//		this.ceIndexMap = new HashMap<Integer, ArrayList<String>>();
+//		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 	}
 	
 //	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map, HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
@@ -61,15 +57,12 @@ public class InvertedIndex {
 	}
 	
 	// search for input term from review list and print out
-	public void reviewSearch(String term) {
-		System.out.println("");
-		
-		
+	public void reviewSearch(String term) {		
 		if(termMap.containsKey(term)) {
 			for(int i = 0; i < termMap.get(term).size(); i++) {
 				
-				int index = termMap.get(term).get(i);
-				System.out.println(ceList.get(index));
+//				termMap.get(term).get(i);
+				System.out.println(termMap.get(term).get(i));
 			}
 		}
 	}
@@ -117,7 +110,7 @@ public class InvertedIndex {
 		
 		String[] terms = cleanReviewText(review);
 		String asin = review.getASIN();
-		ArrayList<CustomerEngagement> termList;
+//		ArrayList<CustomerEngagement> termList;
 		ArrayList<CustomerEngagement> asinList;
 		
 		ceList.add(review); // add Review object to CustomerEngagement list
@@ -138,17 +131,9 @@ public class InvertedIndex {
 			}
 			termMap.put(term, reviewIndexList);
 		}
-		//test print only delete later
-		for(String term: terms) {
-			for(int i: termMap.get(term)) {
-//				if(termMap.get(term).size != null) {
-					System.out.print(term + ": ");
-					System.out.println(ceList.get(i));
-//				}
-				
-			}
-		}
 		
+		//test new InvertedIndex update
+//		ceIndexMap.put(ceListIndex, termList);
 		
 		// test asinMap
 //		if(asinMap.containsKey(asin)) {
