@@ -6,45 +6,28 @@ import java.util.LinkedHashMap;
 
 public class InvertedIndex {
 	
-//	private HashMap<String, ArrayList<CustomerEngagement>> termMap; // term map of term and list of customer engagements (review or qa);
-//	private HashMap<String, HashMap<CustomerEngagement, Integer>> termFreqMap; //
-	
 	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
+	private HashMap<String, ArrayList<CustomerEngagementFrequency>> termMap; // term map
 	
-
-	private HashMap<String, ArrayList<Integer>> termMap; 
-	private ArrayList<CustomerEngagement> ceList;
-//	private HashMap<Integer, ArrayList<String>> ceIndexMap;
-//	private HashMap<String, ArrayList<CustomerEngagement>> termMap;
 
 	public InvertedIndex() {
-//		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 		this.asinMap = new HashMap<String, ArrayList<CustomerEngagement>>();
-		
-		
-		this.termMap = new HashMap<String, ArrayList<Integer>>();
-		this.ceList = new ArrayList<CustomerEngagement>();
-//		this.ceIndexMap = new HashMap<Integer, ArrayList<String>>();
-//		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
+		this.termMap = new HashMap<String, ArrayList<CustomerEngagementFrequency>>();
 	}
 	
-//	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map, HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
-////		this.termMap = map;
-//		this.asinMap = asinMap;
-//	}
-	
-//	public HashMap<String, ArrayList<CustomerEngagement>> getMap() {
-//		return this.termMap;
-//	}
-	
-	public HashMap<String, ArrayList<Integer>> getMap() {
-		return this.termMap;
+	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> asinMap, HashMap<String, ArrayList<CustomerEngagementFrequency>> termMap) {
+		this.asinMap = asinMap;
+		this.termMap = termMap;
 	}
-	
+
 	public HashMap<String, ArrayList<CustomerEngagement>> getASINMap() {
 		return this.asinMap;
 	}
 	
+	public HashMap<String, ArrayList<CustomerEngagementFrequency>> getTermMap() {
+		return this.termMap;
+	}
+
 	// print all review list and qa list that asin matches
 	public void find(String asin) {
 		ArrayList<CustomerEngagement> asinList;

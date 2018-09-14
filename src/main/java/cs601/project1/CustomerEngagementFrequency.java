@@ -23,4 +23,8 @@ public class CustomerEngagementFrequency {
 	public Integer getFreq() {
 		return this.freq;
 	}
+	
+	public void incrementFreq() {
+		this.freq = this.freq + 1;
+	}
 }
