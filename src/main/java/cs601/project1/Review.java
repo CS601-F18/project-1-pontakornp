@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Review extends CustomerEngagement{
 
 	private String reviewText;
+	
 	private HashMap<String, Integer> reviewFreq;
 
 	public Review() {

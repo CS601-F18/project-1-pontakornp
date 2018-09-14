@@ -2,7 +2,7 @@ package cs601.project1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 
 public class InvertedIndex {
 	
@@ -10,27 +10,32 @@ public class InvertedIndex {
 //	private HashMap<String, HashMap<CustomerEngagement, Integer>> termFreqMap; //
 	
 	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
-	private HashMap<String, ArrayList<Integer>> termMap; 
+	
+	
+	private HashMap<String, ArrayList<CustomerEngagement>> termMap2;
+	
+	
+	
+	
+//	private HashMap<String, ArrayList<Integer>> termMap; 
 	private ArrayList<CustomerEngagement> ceList;
-
+	private HashMap<Integer, ArrayList<String>> ceIndexMap;
+	private HashMap<String, ArrayList<CustomerEngagement>> termMap;
+	
+	
 	public InvertedIndex() {
 //		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 		this.asinMap = new HashMap<String, ArrayList<CustomerEngagement>>();
-		this.termMap = new HashMap<String, ArrayList<Integer>>();
+//		this.termMap = new HashMap<String, ArrayList<Integer>>();
 		this.ceList = new ArrayList<CustomerEngagement>();
+		this.ceIndexMap = new HashMap<Integer, ArrayList<String>>();
+		this.termMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 	}
 	
 //	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> map, HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
 ////		this.termMap = map;
 //		this.asinMap = asinMap;
 //	}
-	
-	public InvertedIndex(HashMap<String, ArrayList<CustomerEngagement>> asinMap, HashMap<String, ArrayList<Integer>> termMap, ArrayList<CustomerEngagement> ceList) {
-//		this.termMap = map;
-		this.asinMap = asinMap;
-		this.termMap = termMap;
-		this.ceList = ceList;
-	}
 	
 //	public HashMap<String, ArrayList<CustomerEngagement>> getMap() {
 //		return this.termMap;
@@ -84,8 +89,8 @@ public class InvertedIndex {
 		System.out.println("");
 	}
 	
-	// sort map
-	public void sortMap() {
+	// sort term map
+	public void sortTermMap() {
 		
 	}
 	
@@ -115,7 +120,7 @@ public class InvertedIndex {
 		ArrayList<CustomerEngagement> termList;
 		ArrayList<CustomerEngagement> asinList;
 		
-		ceList.add(review);
+		ceList.add(review); // add Review object to CustomerEngagement list
 		int ceListIndex = ceList.size()-1;
 		ArrayList<Integer> reviewIndexList = new ArrayList<Integer>();
 		//test new
@@ -133,6 +138,7 @@ public class InvertedIndex {
 			}
 			termMap.put(term, reviewIndexList);
 		}
+		//test print only delete later
 		for(String term: terms) {
 			for(int i: termMap.get(term)) {
 //				if(termMap.get(term).size != null) {
