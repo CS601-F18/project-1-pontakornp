@@ -7,7 +7,7 @@ public class CustomerEngagementFrequency {
 	
 	public CustomerEngagementFrequency(CustomerEngagement ce, Integer freq) {
 		this.ce = ce;
-		this.freq= freq;
+		this.freq = freq;
 	}
 	public void setCustomerEngagement(CustomerEngagement ce) {
 		this.ce = ce;
@@ -26,5 +26,9 @@ public class CustomerEngagementFrequency {
 	
 	public void incrementFreq() {
 		this.freq = this.freq + 1;
+	}
+	
+	public String toString() {
+		return ce.toString();
 	}
 }

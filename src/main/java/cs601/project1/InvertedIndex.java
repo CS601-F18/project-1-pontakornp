@@ -45,6 +45,7 @@ public class InvertedIndex {
 			for(int i = 0; i < termMap.get(term).size(); i++) {
 				
 //				termMap.get(term).get(i);
+				System.out.println("Freq: " + termMap.get(term).get(i).getFreq());
 				System.out.println(termMap.get(term).get(i));
 			}
 		}
@@ -90,30 +91,58 @@ public class InvertedIndex {
 //	}
 	
 	public void putReviewIndex(Review review){
-		
+//		private HashMap<String, ArrayList<CustomerEngagementFrequency>> termMap; // for reference
 		String[] terms = cleanReviewText(review);
 		String asin = review.getASIN();
 //		ArrayList<CustomerEngagement> termList;
 		ArrayList<CustomerEngagement> asinList;
 		
-		ceList.add(review); // add Review object to CustomerEngagement list
-		int ceListIndex = ceList.size()-1;
-		ArrayList<Integer> reviewIndexList = new ArrayList<Integer>();
-		//test new
+//		ArrayList<CustomerEngagementFrequency> ceFreqList;
+//		CustomerEngagementFrequency cef = new CustomerEngagementFrequency(review, 0);
+		
+		HashMap<String, Integer> uniqueTermMap = new HashMap<String, Integer>(); // created map to keep unique term
+		int index;
 		for(String term: terms) {
-			review.incrementTermFreq(term); // increment frequency of each term in Review object
+			ArrayList<CustomerEngagementFrequency> ceFreqList;
 			if(termMap.containsKey(term)) {
-				reviewIndexList = termMap.get(term);
-				if(reviewIndexList.get(reviewIndexList.size() - 1) != ceListIndex) {
-					reviewIndexList.add(ceListIndex);
+				ceFreqList = termMap.get(term); // get list that contains cef object matching with the term
+				if(uniqueTermMap.containsKey(term)) { // if cef object exists in the cef list
+					index = ceFreqList.size() - 1; // get index of the review object of cef list
+					ceFreqList.get(index).incrementFreq(); // get cef object and increment the frequency
+				} else { //if the cef object exists in the cef list
+					uniqueTermMap.put(term, 1);
+					ceFreqList.add(new CustomerEngagementFrequency(review, 1)); 
 				}
 			} else {
-				reviewIndexList = new ArrayList<Integer>();
-				reviewIndexList.add(ceListIndex);
-				
+				ceFreqList = new ArrayList<CustomerEngagementFrequency>();
+				uniqueTermMap.put(term, 1);
+				ceFreqList.add(new CustomerEngagementFrequency(review, 1));
+				termMap.put(term, ceFreqList);
 			}
-			termMap.put(term, reviewIndexList);
 		}
+		
+		
+		
+		
+		//comment
+//		ceList.add(review); // add Review object to CustomerEngagement list
+//		int ceListIndex = ceList.size()-1;
+//		ArrayList<Integer> reviewIndexList = new ArrayList<Integer>();
+		//test new
+//		for(String term: terms) {
+//			review.incrementTermFreq(term); // increment frequency of each term in Review object
+//			if(termMap.containsKey(term)) {
+//				reviewIndexList = termMap.get(term);
+//				if(reviewIndexList.get(reviewIndexList.size() - 1) != ceListIndex) {
+//					reviewIndexList.add(ceListIndex);
+//				}
+//			} else {
+//				reviewIndexList = new ArrayList<Integer>();
+//				reviewIndexList.add(ceListIndex);
+//				
+//			}
+//			termMap.put(term, reviewIndexList);
+//		}
 		
 		//test new InvertedIndex update
 //		ceIndexMap.put(ceListIndex, termList);
