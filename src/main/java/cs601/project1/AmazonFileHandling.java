@@ -54,11 +54,13 @@ public class AmazonFileHandling {
 					if(customerEngagementType == "review") {
 						review = gson.fromJson(line, Review.class); // parse json to Review object
 //						System.out.println(review);
-						index.putReviewIndex(review);
+//						index.putReviewIndex(review);
+						index.putIndex(review, customerEngagementType);
 					} else {
 						qa = gson.fromJson(line, QA.class); // parse json to QA object
 //						System.out.println(qa);
-						index.putQAIndex(qa);
+//						index.putQAIndex(qa);
+						index.putIndex(qa, customerEngagementType);
 					}
 				} catch(JsonSyntaxException jse) {
 					// skip
@@ -72,7 +74,7 @@ public class AmazonFileHandling {
 		return index;
 	}
 	
-	public void callUserInputFunction(String line, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
+	public void execute(String line, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
 		if(line == "") {
 			System.out.println("Please try again with the correct format");
 			return;
@@ -100,9 +102,9 @@ public class AmazonFileHandling {
 			reviewIndex.find(text);
 			qaIndex.find(text);
 		} else if(command.equals("reviewsearch")) {
-			reviewIndex.reviewSearch(text);
+			reviewIndex.search(text);
 		} else if(command.equals("qasearch")) {
-			
+			qaIndex.search(text);
 		} else if(command.equals("reviewpartialsearch")) {
 			
 		} else if(command.equals("qapartialsearch")) {

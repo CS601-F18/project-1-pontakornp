@@ -27,11 +27,12 @@ public class AmazonSearch {
 //		ArrayList<CustomerEngagement> reviewlist = file.readFile(reviewFileName, "review");
 //		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
 		InvertedIndex reviewIndex = fileHandling.readFile(reviewFileName, "review");
+		reviewIndex.sortTermMap();
 		InvertedIndex qaIndex = fileHandling.readFile(qaFileName, "qa");
 		
-//		reviewIndex.find("120401325X");
-//		qaIndex.find("1466736038");
-		
+		reviewIndex.find("120401325X");
+		qaIndex.find("1466736038");
+		System.out.println("hello");
 		long end = System.currentTimeMillis();
 		System.out.println("Time: " + Math.round((end-start) / 1000) + " seconds" );
 		try(
@@ -43,7 +44,7 @@ public class AmazonSearch {
 				System.out.print("Please type your command: ");
 				text = scanner.nextLine();
 				System.out.println("");
-				fileHandling.callUserInputFunction(text, reviewIndex, qaIndex);
+				fileHandling.execute(text, reviewIndex, qaIndex);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

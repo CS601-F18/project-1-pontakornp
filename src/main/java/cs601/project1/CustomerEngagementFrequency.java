@@ -1,6 +1,6 @@
 package cs601.project1;
 
-public class CustomerEngagementFrequency {
+public class CustomerEngagementFrequency implements Comparable<CustomerEngagementFrequency> {
 	
 	private CustomerEngagement ce;
 	private Integer freq;
@@ -30,5 +30,11 @@ public class CustomerEngagementFrequency {
 	
 	public String toString() {
 		return ce.toString();
+	}
+	
+	@Override
+	public int compareTo(CustomerEngagementFrequency cef) {
+		int compareFreq = ((CustomerEngagementFrequency)cef).getFreq();
+		return compareFreq - this.freq; // use for sorting in descending order
 	}
 }
