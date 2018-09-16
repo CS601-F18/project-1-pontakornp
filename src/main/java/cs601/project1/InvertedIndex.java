@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class InvertedIndex {
 	
@@ -30,24 +31,27 @@ public class InvertedIndex {
 	}
 
 	// print all review list and qa list that asin matches
-	public void find(String asin) {
-		ArrayList<CustomerEngagement> asinList;
-		if(asinMap.containsKey(asin)) {
-			asinList = asinMap.get(asin);
-			for(CustomerEngagement ce: asinList) {
-				System.out.println(ce.toString());
-			}
+	public boolean find(String asin) {
+		if(!asinMap.containsKey(asin)) {
+			return false;
 		}
+		ArrayList<CustomerEngagement> asinList = asinMap.get(asin);
+		for(CustomerEngagement ce: asinList) {
+			System.out.println(ce.toString());
+		}
+		return true;
 	}
 	
 	// search for input term from review or qa list and print text
-	public void search(String term) {
-		if(termMap.containsKey(term)) {
-			for(int i = 0; i < termMap.get(term).size(); i++) {
-				System.out.println("Freq: " + termMap.get(term).get(i).getFreq());
-				System.out.println(termMap.get(term).get(i));
-			}
+	public boolean search(String term) {
+		if(!termMap.containsKey(term)) {
+			return false;
 		}
+		for(int i = 0; i < termMap.get(term).size(); i++) {
+			System.out.println("Freq: " + termMap.get(term).get(i).getFreq());
+			System.out.println(termMap.get(term).get(i));
+		}
+		return true;
 	}
 
 	// do a partial search for input term from review or qa list and print text
@@ -69,13 +73,14 @@ public class InvertedIndex {
 	 * @param customerEngagementType
 	 */
 	public void putIndex(CustomerEngagement ce, String customerEngagementType){
+//		System.out.println(ce.toString());
 		String[] terms;
 		if(customerEngagementType == "review") {
 			terms = cleanReviewText((Review)ce);
 		} else {
 			terms = cleanQAText((QA)ce);
 		}
-		String asin = ce.getASIN();
+		String asin = cleanASIN(ce.getASIN());
 		ArrayList<CustomerEngagement> asinList;
 
 		HashMap<String, Integer> uniqueTermMap = new HashMap<String, Integer>(); // created map to keep unique term
@@ -144,4 +149,7 @@ public class InvertedIndex {
 		return terms;
 	}
 	
+	public String cleanASIN(String asin) {
+		return asin.toLowerCase();
+	}
 }

@@ -34,6 +34,7 @@ public class QA extends CustomerEngagement {
 	}
 	
 	public String toString() {
-		return "asin: " + asin + ", question: " + question + ", answer: " + answer;
+//		return "asin: " + asin + ", question: " + question + ", answer: " + answer;
+		return "question: " + question + "\nanswer: " + answer;
 	}
 }

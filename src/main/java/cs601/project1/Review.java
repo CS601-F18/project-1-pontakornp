@@ -41,7 +41,8 @@ public class Review extends CustomerEngagement{
 	}
 	
 	public String toString() {
-		return "asin: "+ asin + ", reviewText: " + reviewText;
+//		return "asin: "+ asin + ", reviewText: " + reviewText;
+		return "reviewText: " + reviewText;
 	}
 	
 	public boolean equals(Object o) {

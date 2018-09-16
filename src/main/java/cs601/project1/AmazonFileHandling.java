@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import com.google.gson.Gson;
@@ -31,41 +32,29 @@ public class AmazonFileHandling {
 		Charset cs = Charset.forName("ISO-8859-1");
 		Path path = Paths.get(fileName);
 		
-		CustomerEngagement ce;
-		
 		InvertedIndex index = new InvertedIndex();
-		ArrayList<CustomerEngagement> list = new ArrayList<CustomerEngagement>();
-//		HashMap<String, ArrayList<CustomerEngagement>> map = index.getMap();
-		
-//		String reviews = "";
-//		String qa = "";
-		
 		Review review;
 		QA qa;
-		String[] terms;
+		// initializes necessary variables: gson, line, and review to use while looping the json file 
+		Gson gson = new Gson();
+		String line = "";
 		try(
 			BufferedReader reader = Files.newBufferedReader(path, cs);
 				){
-			// initializes necessary variables: gson, line, and review to use while looping the json file 
-			Gson gson = new Gson();
-			String line = "";
 			while((line = reader.readLine()) != null) {
 				try {
 					if(customerEngagementType == "review") {
 						review = gson.fromJson(line, Review.class); // parse json to Review object
-//						System.out.println(review);
-//						index.putReviewIndex(review);
 						index.putIndex(review, customerEngagementType);
 					} else {
 						qa = gson.fromJson(line, QA.class); // parse json to QA object
-//						System.out.println(qa);
-//						index.putQAIndex(qa);
 						index.putIndex(qa, customerEngagementType);
 					}
 				} catch(JsonSyntaxException jse) {
 					// skip
 				}
 			}
+			index.sortTermMap();
 			return index;
 		}
 		catch(IOException ioe) {
@@ -85,7 +74,7 @@ public class AmazonFileHandling {
 					+ "\tqasearch <term> - print all review lists that contain term e.g. qasearch hello\n"
 					+ "\tpartialreviewsearch <term> - print all review lists that contain partially matched term e.g. partialreviewsearch hello\n"
 					+ "\tpartialqasearch <term> - print all review lists that contain partially matched term e.g. partialqasearch hello\n"
-					+ "\texit - exit the program\n");
+			);
 			return;
 		} else if(line.equals("exit")) {
 			System.out.println("Exit program");
@@ -99,12 +88,17 @@ public class AmazonFileHandling {
 		String command = parts[0].toLowerCase();
 		String text = parts[1].toLowerCase();
 		if(command.equals("find")) {
-			reviewIndex.find(text);
-			qaIndex.find(text);
+			if(!reviewIndex.find(text) && !qaIndex.find(text)) {
+				System.out.println("ASIN not found. Please try to find other ASIN.");
+			}
 		} else if(command.equals("reviewsearch")) {
-			reviewIndex.search(text);
+			if(!reviewIndex.search(text)) {
+				System.out.println("Search term is not found. Please try other search term.");
+			}
 		} else if(command.equals("qasearch")) {
-			qaIndex.search(text);
+			if(!qaIndex.search(text)) {
+				System.out.println("Search term is not found. Please try other search term.");
+			}
 		} else if(command.equals("reviewpartialsearch")) {
 			
 		} else if(command.equals("qapartialsearch")) {
