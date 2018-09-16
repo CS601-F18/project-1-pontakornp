@@ -24,10 +24,7 @@ public class AmazonSearch {
 //		reviewFileName = "reviews_Cell_Phones_and_Accessories_5.json";
 //		qaFileName = "qa_Cell_Phones_and_Accessories.json";
 		AmazonFileHandling fileHandling = new AmazonFileHandling();
-//		ArrayList<CustomerEngagement> reviewlist = file.readFile(reviewFileName, "review");
-//		ArrayList<CustomerEngagement> qaList = file.readFile(qaFileName, "qa");
 		InvertedIndex reviewIndex = fileHandling.readFile(reviewFileName, "review");
-		reviewIndex.sortTermMap();
 		InvertedIndex qaIndex = fileHandling.readFile(qaFileName, "qa");
 		
 		reviewIndex.find("120401325X");
