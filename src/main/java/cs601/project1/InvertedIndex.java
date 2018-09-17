@@ -6,12 +6,33 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * 
+ * This class is an inverted index data structure used for 
+ * searching ASIN and term from Amazon review and/or qa documents.
+ * 
+ * Contains two variables, asinMap and termMap, which are maps used for storing search keywords.
+ * 
+ * asinMap has asin as the key and list of customer engagement as the value.
+ * termMap has term as the key and list of customer engagement frequency as the value.
+ * 
+ * Contains main methods as follow: 
+ * - getters and setters for the class,
+ * - find asin from asin map, 
+ * - perform exact search and partial search for term from term map, 
+ * - sort term map by frequency for exact search method,
+ * - and put relevant objects into map.
+ * 
+ * Contains helper methods:
+ * - clean text
+ * - print text
+ * 
+ */
 public class InvertedIndex {
 	
 	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
 	private HashMap<String, ArrayList<CustomerEngagementFrequency>> termMap; // term map
 	
-
 	public InvertedIndex() {
 		this.asinMap = new HashMap<String, ArrayList<CustomerEngagement>>();
 		this.termMap = new HashMap<String, ArrayList<CustomerEngagementFrequency>>();
@@ -26,11 +47,21 @@ public class InvertedIndex {
 		return this.asinMap;
 	}
 	
+	public void setASINMap(HashMap<String, ArrayList<CustomerEngagement>> asinMap) {
+		this.asinMap = asinMap;
+	}
+	
 	public HashMap<String, ArrayList<CustomerEngagementFrequency>> getTermMap() {
 		return this.termMap;
 	}
 
-	// print all review list and qa list that asin matches
+	/**
+	 * 
+	 * Searches and prints all review/ qa list matches to given asin.
+	 * 
+	 * @param asin - expects asin of a specific product
+	 * @return true or false
+	 */
 	public boolean find(String asin) {
 		if(!asinMap.containsKey(asin)) {
 			return false;
@@ -42,24 +73,45 @@ public class InvertedIndex {
 		return true;
 	}
 	
-	// search for input term from review or qa list and print text
+	/**
+	 * 
+	 * Searches and prints all review/ qa list exactly matches to given search term.
+	 * 
+	 * @param term - expects term for exact search
+	 * @return true or false
+	 */
 	public boolean search(String term) {
 		if(!termMap.containsKey(term)) {
 			return false;
 		}
-		for(int i = 0; i < termMap.get(term).size(); i++) {
-			System.out.println("Freq: " + termMap.get(term).get(i).getFreq());
-			System.out.println(termMap.get(term).get(i));
-		}
+		printText(term);
 		return true;
 	}
-
-	// do a partial search for input term from review or qa list and print text
-	public void partialSearch(String term) {
-		System.out.println("");
+	
+	/**
+	 * 
+	 * Searches and prints all review/ qa list that partially matches with given search term.
+	 * 
+	 * @param term - expects term for partial search
+	 * @return true or false
+	 */
+	public boolean partialSearch(String term) {
+		boolean isExist = false;
+		for(Map.Entry<String, ArrayList<CustomerEngagementFrequency>> entry: termMap.entrySet()) {
+			String key = entry.getKey();
+			if(key.indexOf(term) != -1) {
+				printText(key);
+				isExist = true;
+			}
+		}
+		return isExist;
 	}
-
-	// sort term map
+	
+	
+	/**
+	 * 
+	 * Sorts objects in the list of term map by frequency.
+	 */
 	public void sortTermMap() {
 		for(ArrayList<CustomerEngagementFrequency> cef: termMap.values()) {
 			Collections.sort(cef);
@@ -67,13 +119,13 @@ public class InvertedIndex {
 	}
 	
 	/**
-	 * put terms and array list of customer engagement into map
 	 * 
-	 * @param ce
-	 * @param customerEngagementType
+	 * Puts terms and list of customer engagement frequency object into map.
+	 * 
+	 * @param ce - expects customer engagement object
+	 * @param customerEngagementType - expects either of the 2 types of customer engagement, review or qa.
 	 */
 	public void putIndex(CustomerEngagement ce, String customerEngagementType){
-//		System.out.println(ce.toString());
 		String[] terms;
 		if(customerEngagementType == "review") {
 			terms = cleanReviewText((Review)ce);
@@ -115,41 +167,63 @@ public class InvertedIndex {
 	}
 	
 	/**
-	 * clean review text (separate words by white space, remove all non-alphanumeric characters, and convert the string to lower case)
+	 * 
+	 * Cleans review text
 	 * 
 	 * @param review
 	 * @return arrays of terms
 	 */
-	public String[] cleanReviewText(Review review) {
+	private String[] cleanReviewText(Review review) {
 		String reviewText = review.getReviewText();
 		return cleanText(reviewText);
 	}
 	
 	/**
-	 * clean review text (separate words by white space, remove all non-alphanumeric characters, and convert the string to lower case)
+	 * 
+	 * Cleans qa text
 	 * 
 	 * @param qa
 	 * @return array of terms
 	 */
-	public String[] cleanQAText(QA qa) {
+	private String[] cleanQAText(QA qa) {
 		String question = qa.getQueston();
 		String answer = qa.getAnswer();
 		return cleanText(question + answer);
 	}
 	
 	/**
-	 * helper method for cleanReviewText and cleanQAText
+	 * 
+	 * Helper method for clean review and qa text methods.
+	 * 
+	 * Cleans text by
+	 * separate words by white space, 
+	 * remove all non-alphanumeric characters, 
+	 * and convert the string to lower case
+	 * 
 	 * @param text
 	 * @return arrays of terms after cleaning
 	 */
-	public String[] cleanText(String text) {
-		text = text.replaceAll("[^A-Za-z0-9 ]", ""); // remove all non-alphanumeric characters
+	private String[] cleanText(String text) {
+		text = text.replaceAll("[^A-Za-z0-9]", " "); // remove all non-alphanumeric characters
 		text = text.toLowerCase(); // convert to lower case
-		String[] terms = text.split(" "); // separate words by white space
+		String[] terms = text.split(" +"); // separate words by white space
 		return terms;
 	}
 	
-	public String cleanASIN(String asin) {
+	/**
+	 * 
+	 * Cleans asin by convert it to lower case for case insensitive purpose.
+	 * 
+	 * @param asin - expects asin of a product
+	 * @return asin after converted to lower case
+	 */
+	private String cleanASIN(String asin) {
 		return asin.toLowerCase();
+	}
+	
+	private void printText(String term) {
+		for(int i = 0; i < termMap.get(term).size(); i++) {
+			System.out.println(termMap.get(term).get(i));
+		}
 	}
 }
