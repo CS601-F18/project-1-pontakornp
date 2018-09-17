@@ -64,10 +64,10 @@ public class AmazonFileHandling {
 				try {
 					if(customerEngagementType == "review") {
 						Review review = gson.fromJson(line, Review.class); // parse json to Review object
-						index.putIndex(review, customerEngagementType);
+						index.addToMap(review, customerEngagementType); // add review to map in inverted index
 					} else {
 						QA qa = gson.fromJson(line, QA.class); // parse json to QA object
-						index.putIndex(qa, customerEngagementType);
+						index.addToMap(qa, customerEngagementType); // add qa to map in inverted index
 					}
 				} catch(JsonSyntaxException jse) {
 					// skip
@@ -81,7 +81,6 @@ public class AmazonFileHandling {
 		}
 		return index;
 	}
-	
 	
 	/**
 	 * 
@@ -106,7 +105,6 @@ public class AmazonFileHandling {
 			System.out.println("Exit program.");
 			return;
 		}
-		
 		String[] parts = line.split(" ");
 		if(parts.length != 2) {
 			System.out.println("Please try again with the correct format.");

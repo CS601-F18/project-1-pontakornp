@@ -20,7 +20,7 @@ import java.util.Map;
  * - find asin from asin map, 
  * - perform exact search and partial search for term from term map, 
  * - sort term map by frequency for exact search method,
- * - and put relevant objects into map.
+ * - and add relevant objects into map.
  * 
  * Contains helper methods:
  * - clean text
@@ -119,43 +119,25 @@ public class InvertedIndex {
 	
 	/**
 	 * 
-	 * Puts terms and list of customer engagement frequency object into map.
+	 * Calls put asin and put term methods to put elements into asin map and term map
 	 * 
 	 * @param ce - expects customer engagement object
-	 * @param customerEngagementType - expects either of the 2 types of customer engagement, review or qa.
+	 * @param customerEngagementType - expects review or qa
 	 */
-	public void putIndex(CustomerEngagement ce, String customerEngagementType){
-		String[] terms;
-		if(customerEngagementType == "review") {
-			terms = cleanReviewText((Review)ce);
-		} else {
-			terms = cleanQAText((QA)ce);
-		}
+	public void addToMap(CustomerEngagement ce, String customerEngagementType){
+		putASIN(ce);
+		putTerm(ce, customerEngagementType);
+	}
+	
+	/**
+	 * 
+	 * Puts ASIN and list of customer engagement object into asin map.
+	 * 
+	 * @param ce - expects customer engagement object
+	 */
+	private void putASIN(CustomerEngagement ce) {
 		String asin = cleanASIN(ce.getASIN());
 		ArrayList<CustomerEngagement> asinList;
-
-		HashMap<String, Integer> uniqueTermMap = new HashMap<String, Integer>(); // created map to keep unique term
-		int index;
-		for(String term: terms) {
-			ArrayList<CustomerEngagementFrequency> ceFreqList;
-			if(termMap.containsKey(term)) {
-				ceFreqList = termMap.get(term); // get list that contains cef object matching with the term
-				if(uniqueTermMap.containsKey(term)) { // if cef object exists in the cef list
-					index = ceFreqList.size() - 1; // get index of the review object of cef list
-					ceFreqList.get(index).incrementFreq(); // get cef object and increment the frequency
-				} else { //if the cef object exists in the cef list
-					uniqueTermMap.put(term, 1);
-					ceFreqList.add(new CustomerEngagementFrequency(ce, 1)); 
-				}
-			} else {
-				ceFreqList = new ArrayList<CustomerEngagementFrequency>();
-				uniqueTermMap.put(term, 1);
-				ceFreqList.add(new CustomerEngagementFrequency(ce, 1));
-				termMap.put(term, ceFreqList);
-			}
-		}
-		
-		// asinMap
 		if(asinMap.containsKey(asin)) {
 			asinList = asinMap.get(asin);
 		} else {
@@ -167,7 +149,42 @@ public class InvertedIndex {
 	
 	/**
 	 * 
-	 * Cleans review text
+	 * Puts terms and list of customer engagement frequency object into term map.
+	 * 
+	 * @param ce - expects customer engagement object
+	 * @param customerEngagementType - expects review or qa
+	 */
+	private void putTerm(CustomerEngagement ce, String customerEngagementType) {
+		String[] terms;
+		if(customerEngagementType == "review") {
+			terms = cleanReviewText((Review)ce);
+		} else {
+			terms = cleanQAText((QA)ce);
+		}
+		HashMap<String, Integer> uniqueTermMap = new HashMap<String, Integer>(); // map to keep unique term
+		for(String term: terms) {
+			ArrayList<CustomerEngagementFrequency> ceFreqList;
+			if(termMap.containsKey(term)) {
+				ceFreqList = termMap.get(term); // get list that contains cef object matching with the term
+				if(uniqueTermMap.containsKey(term)) { // check if cef object exists in the cef list
+					int index = ceFreqList.size() - 1; // get index of the review object of cef list
+					ceFreqList.get(index).incrementFreq(); // get cef object and increment the frequency
+				} else {
+					uniqueTermMap.put(term, 1);
+					ceFreqList.add(new CustomerEngagementFrequency(ce, 1)); 
+				}
+			} else {
+				ceFreqList = new ArrayList<CustomerEngagementFrequency>();
+				uniqueTermMap.put(term, 1);
+				ceFreqList.add(new CustomerEngagementFrequency(ce, 1));
+				termMap.put(term, ceFreqList);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * Cleans review text.
 	 * 
 	 * @param review
 	 * @return arrays of terms

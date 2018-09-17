@@ -5,11 +5,6 @@ import java.util.Scanner;
 public class AmazonSearch {
 
 	public static void main(String[] args) {
-		long start = System.currentTimeMillis();
-//		reviewFileName = "testreview.json";
-//		qaFileName = "testqa.json";
-//		reviewFileName = "reviews_Cell_Phones_and_Accessories_5.json";
-//		qaFileName = "qa_Cell_Phones_and_Accessories.json";
 		AmazonFileHandling fileHandling = new AmazonFileHandling();
 		if(!fileHandling.isInputValid(args)) {
 			return;
@@ -18,10 +13,6 @@ public class AmazonSearch {
 		String qaFileName = args[3];
 		InvertedIndex reviewIndex = fileHandling.readFile(reviewFileName, "review");
 		InvertedIndex qaIndex = fileHandling.readFile(qaFileName, "qa");
-//		reviewIndex.find("120401325X");
-//		qaIndex.find("1466736038");
-		long end = System.currentTimeMillis();
-		System.out.println("Time: " + Math.round((end-start) / 1000) + " seconds" );
 		try(
 			Scanner scanner = new Scanner(System.in);
 		){
@@ -38,7 +29,5 @@ public class AmazonSearch {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
-
 }
