@@ -31,6 +31,7 @@ public class AmazonSearch {
 				System.out.println("Type \"exit\" to exit the program.");
 				System.out.print("Please type your command: ");
 				text = scanner.nextLine();
+				System.out.println("Search Results: ");
 				fileHandling.execute(text, reviewIndex, qaIndex);
 				System.out.println("");
 			}
