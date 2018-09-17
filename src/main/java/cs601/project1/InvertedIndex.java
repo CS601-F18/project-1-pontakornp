@@ -106,7 +106,6 @@ public class InvertedIndex {
 		return isExist;
 	}
 	
-	
 	/**
 	 * 
 	 * Sorts objects in the list of term map by frequency.
