@@ -34,10 +34,10 @@ public class AmazonFileHandling {
 			msg += "Incorrect input format.\n";
 		}
 		if (args[1] == "" || !isFileExist(args[1])) {
-			msg += "Incorrect correct Review file name.\n";
+			msg += "Incorrect Review file name.\n";
 		}
 		if (args[3] == "" || !isFileExist(args[3])) {
-			msg += "Incorrect correct Q&A file name.\n";
+			msg += "Incorrect Q&A file name.\n";
 		}
 		if(!msg.equals("")) {
 			msg += "Please try again.";
@@ -113,7 +113,7 @@ public class AmazonFileHandling {
 			return;
 		}
 		String command = parts[0].toLowerCase();
-		String text = parts[1].toLowerCase();
+		String text = parts[1].replaceAll("[^A-Za-z0-9]", "").toLowerCase();  // remove all non-alphanumeric characters
 		if(command.equals("find")) {
 			boolean isReviewFound = reviewIndex.find(text);
 			boolean isQAFound = qaIndex.find(text);

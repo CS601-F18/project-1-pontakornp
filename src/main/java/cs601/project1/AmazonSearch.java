@@ -30,6 +30,11 @@ public class AmazonSearch {
 	 * @param args - expects the command -reviews <review_file_name> -qa <qa_file_name>
 	 */
 	public static void main(String[] args) {
+		if(args.length == 0) {
+			System.out.println("Incorrect input format.\n"
+				+ "Please try again.");
+			return;
+		}
 		AmazonFileHandling fileHandling = new AmazonFileHandling();
 		if(!fileHandling.isInputValid(args)) {
 			return;
@@ -41,15 +46,15 @@ public class AmazonSearch {
 		try(
 			Scanner scanner = new Scanner(System.in);
 		){
-			String text = "";
+			String line = "";
 			String defaultPrint = "Type \"help\" to list out all commands.\n"
 					+ "Type \"exit\" to exit the program.\n"
 					+ "Please type your command: ";
-			while(!text.equals("exit")) {
+			while(!line.equals("exit")) {
 				System.out.print(defaultPrint);
-				text = scanner.nextLine();
+				line = scanner.nextLine();
 				System.out.println("");
-				fileHandling.execute(text, reviewIndex, qaIndex);
+				fileHandling.execute(line, reviewIndex, qaIndex);
 			}
 		} catch (InputMismatchException e) {
 			System.out.println("Please try again with the appropriate format.");
