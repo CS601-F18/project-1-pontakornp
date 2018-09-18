@@ -2,22 +2,37 @@ package cs601.project1;
 
 /**
  * 
+ * @author pontakornp
+ * 
  * This class represents review which is the child of customer engagement class.
- * It contains review text as additional variable of its parent.
+ * It contains reviewer ID, review text, and overall score as additional variable of its parent.
  *
  */
 public class Review extends CustomerEngagement{
-
+	private String reviewerID;
 	private String reviewText;
-
+	private double overall;
+	
 	public Review() {
 		super("");
+		reviewerID = "";
 		reviewText = "";
+		overall = 0.0;
 	}
 	
-	public Review(String asin, String reviewText) {
+	public Review(String asin, String reviewerID, String reviewText, double overall) {
 		super(asin);
+		this.reviewerID = reviewerID;
 		this.reviewText = reviewText;
+		this.overall = overall;
+	}
+	
+	public String getReviewerID() {
+		return this.reviewerID;
+	}
+	
+	public void setReviewerID(String reviewerID) {
+		this.reviewerID = reviewerID;
 	}
 	
 	public String getReviewText() {
@@ -28,7 +43,18 @@ public class Review extends CustomerEngagement{
 		this.reviewText = value;
 	}
 	
+	public double getOverall() {
+		return this.overall;
+	}
+	
+	public void setOverall(double overall) {
+		this.overall = overall;
+	}
+	
 	public String toString() {
-		return "reviewText: " + reviewText;
+		return "Reviewer ID: " + reviewerID + "\n"
+				+ "ASIN: " + asin + "\n"
+				+ "Review text: " + reviewText + "\n"
+				+ "Overall Score: " + overall + "\n";
 	}
 }

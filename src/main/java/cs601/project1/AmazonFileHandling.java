@@ -13,6 +13,8 @@ import com.google.gson.JsonSyntaxException;
 
 /**
  * 
+ * @author pontakornp
+ *  
  * Contains methods for handling file operations.
  * Important methods contained are for check arguments, read from a file, and receive user input commands.
  * Helper method contained is for check for file existence.
@@ -77,7 +79,7 @@ public class AmazonFileHandling {
 			return index;
 		}
 		catch(IOException ioe) {
-			ioe.printStackTrace();
+			System.out.println("Please try again with correct input.");
 		}
 		return index;
 	}

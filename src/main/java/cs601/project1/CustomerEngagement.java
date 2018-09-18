@@ -2,6 +2,8 @@ package cs601.project1;
 
 /**
  * 
+ * @author pontakornp
+ * 
  * This class represents customer engagement
  * which is the parent class for review and qa classes.
  * 
@@ -9,7 +11,6 @@ package cs601.project1;
  *
  */
 public abstract class CustomerEngagement {
-	
 	protected String asin;
 	
 	public CustomerEngagement() {
@@ -31,5 +32,4 @@ public abstract class CustomerEngagement {
 	public String toString() {
 		return "asin: " + asin;
 	}
-	
 }

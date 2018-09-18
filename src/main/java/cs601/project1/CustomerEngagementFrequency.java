@@ -2,6 +2,8 @@ package cs601.project1;
 
 /**
  * 
+ * @author pontakornp
+ * 
  * This class keeps track of the frequency of term 
  * for each customer engagement objects.
  * 
@@ -9,11 +11,10 @@ package cs601.project1;
  *
  */
 public class CustomerEngagementFrequency implements Comparable<CustomerEngagementFrequency> {
-	
 	private CustomerEngagement ce;
-	private Integer freq;
+	private int freq;
 	
-	public CustomerEngagementFrequency(CustomerEngagement ce, Integer freq) {
+	public CustomerEngagementFrequency(CustomerEngagement ce, int freq) {
 		this.ce = ce;
 		this.freq = freq;
 	}
@@ -21,19 +22,19 @@ public class CustomerEngagementFrequency implements Comparable<CustomerEngagemen
 		this.ce = ce;
 	}
 	public CustomerEngagement getCE() {
-		return this.ce;
+		return ce;
 	}
 	
-	public void setFreq(Integer freq) {
+	public void setFreq(int freq) {
 		this.freq = freq;
 	}
 
 	public Integer getFreq() {
-		return this.freq;
+		return freq;
 	}
 	
 	public void incrementFreq() {
-		this.freq = this.freq + 1;
+		freq = freq + 1;
 	}
 	
 	public String toString() {
@@ -50,6 +51,6 @@ public class CustomerEngagementFrequency implements Comparable<CustomerEngagemen
 	 */
 	public int compareTo(CustomerEngagementFrequency cef) {
 		int compareFreq = ((CustomerEngagementFrequency)cef).getFreq();
-		return compareFreq - this.freq; // use for sorting in descending order
+		return compareFreq - freq; // use for sorting in descending order
 	}
 }

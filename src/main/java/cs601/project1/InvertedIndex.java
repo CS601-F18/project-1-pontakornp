@@ -7,6 +7,8 @@ import java.util.Map;
 
 /**
  * 
+ * @author pontakornp
+ * 
  * This class is an inverted index data structure used for 
  * searching ASIN and term from Amazon review and/or qa documents.
  * 
@@ -28,7 +30,6 @@ import java.util.Map;
  * 
  */
 public class InvertedIndex {
-	
 	private HashMap<String, ArrayList<CustomerEngagement>> asinMap; // asin map
 	private HashMap<String, ArrayList<CustomerEngagementFrequency>> termMap; // term map
 	
@@ -160,23 +161,23 @@ public class InvertedIndex {
 		} else {
 			terms = cleanQAText((QA)ce);
 		}
-		HashMap<String, Integer> uniqueTermMap = new HashMap<String, Integer>(); // map to keep unique term
+		HashMap<String, Integer> uniqueTermMap = new HashMap<String, Integer>(); // map to keep unique term temporarily
 		for(String term: terms) {
 			ArrayList<CustomerEngagementFrequency> ceFreqList;
 			if(termMap.containsKey(term)) {
 				ceFreqList = termMap.get(term); // get list that contains cef object matching with the term
-				if(uniqueTermMap.containsKey(term)) { // check if cef object exists in the cef list
-					int index = ceFreqList.size() - 1; // get index of the review object of cef list
+				if(uniqueTermMap.containsKey(term)) { // check if cef object already contains the pass in term by searching in unique term map
+					int index = ceFreqList.size() - 1; // get index of the customer engagement object of cef list that contains the matching term
 					ceFreqList.get(index).incrementFreq(); // get cef object and increment the frequency
 				} else {
-					uniqueTermMap.put(term, 1);
-					ceFreqList.add(new CustomerEngagementFrequency(ce, 1)); 
+					uniqueTermMap.put(term, 1); // put term to unique map
+					ceFreqList.add(new CustomerEngagementFrequency(ce, 1)); // add new customer engagement frequency object to the list
 				}
 			} else {
 				ceFreqList = new ArrayList<CustomerEngagementFrequency>();
 				uniqueTermMap.put(term, 1);
 				ceFreqList.add(new CustomerEngagementFrequency(ce, 1));
-				termMap.put(term, ceFreqList);
+				termMap.put(term, ceFreqList); // put term and cef object to term map
 			}
 		}
 	}
@@ -236,8 +237,18 @@ public class InvertedIndex {
 		return asin.toLowerCase();
 	}
 	
+	/**
+	 * 
+	 * Helper function of partial search.
+	 * 
+	 * Prints customer engagement details
+	 * 
+	 * @param term - expects review or qa term
+	 */
 	private void printText(String term) {
 		for(int i = 0; i < termMap.get(term).size(); i++) {
+			System.out.println("Matched term: " + term);
+			System.out.println("Freq: " + termMap.get(term).get(i).getFreq());
 			System.out.println(termMap.get(term).get(i));
 		}
 	}

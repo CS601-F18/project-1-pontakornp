@@ -2,12 +2,13 @@ package cs601.project1;
 
 /**
  * 
+ * @author pontakornp
+ * 
  * This class represents qa which is the child of customer engagement class.
  * It contains question and answer as additional variables of its parent.
  *
  */
 public class QA extends CustomerEngagement {
-
 	private String question;
 	private String answer;
 	
@@ -40,6 +41,8 @@ public class QA extends CustomerEngagement {
 	}
 	
 	public String toString() {
-		return "question: " + question + "\nanswer: " + answer;
+		return "ASIN: " + asin + "\n"
+				+ "Question: " + question + "\n"
+				+ "Answer: " + answer + "\n";
 	}
 }
