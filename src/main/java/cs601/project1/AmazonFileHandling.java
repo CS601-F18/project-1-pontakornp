@@ -115,7 +115,9 @@ public class AmazonFileHandling {
 		String command = parts[0].toLowerCase();
 		String text = parts[1].toLowerCase();
 		if(command.equals("find")) {
-			if(!reviewIndex.find(text) && !qaIndex.find(text)) {
+			boolean isReviewFound = reviewIndex.find(text);
+			boolean isQAFound = qaIndex.find(text);
+			if(!isReviewFound && !isQAFound) {
 				System.out.println("ASIN is not found. Please try to find other ASIN.\n");
 			}
 		} else if(command.equals("reviewsearch")) {
