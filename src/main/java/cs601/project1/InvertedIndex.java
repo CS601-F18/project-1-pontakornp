@@ -220,7 +220,7 @@ public class InvertedIndex {
 	 * @return arrays of terms after cleaning
 	 */
 	private String[] cleanText(String text) {
-		text = text.replaceAll("[^A-Za-z0-9]", " "); // remove all non-alphanumeric characters
+		text = text.replaceAll("[^A-Za-z0-9 ]", ""); // remove all non-alphanumeric characters
 		text = text.toLowerCase(); // convert to lower case
 		String[] terms = text.split(" +"); // separate words by white space
 		return terms;
