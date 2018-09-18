@@ -30,28 +30,34 @@ public class AmazonSearch {
 	 * @param args - expects the command -reviews <review_file_name> -qa <qa_file_name>
 	 */
 	public static void main(String[] args) {
+		long start = System.currentTimeMillis();
 		AmazonFileHandling fileHandling = new AmazonFileHandling();
 		if(!fileHandling.isInputValid(args)) {
 			return;
 		}
 		String reviewFileName = args[1];
 		String qaFileName = args[3];
-		reviewFileName = "testreview.json";
-		qaFileName = "testqa.json";
+//		reviewFileName = "testreview.json";
+//		qaFileName = "testqa.json";
+		reviewFileName = "reviews_Cell_Phones_and_Accessories_5.json";
+		qaFileName = "qa_Cell_Phones_and_Accessories.json";
+		
 		InvertedIndex reviewIndex = fileHandling.readFile(reviewFileName, "review");
 		InvertedIndex qaIndex = fileHandling.readFile(qaFileName, "qa");
+		long end = System.currentTimeMillis();
+		System.out.println("Time: " + Math.round((end-start) / 1000) + " seconds" );
 		try(
 			Scanner scanner = new Scanner(System.in);
 		){
 			String text = "";
+			String defaultPrint = "Type \"help\" to list out all commands.\n"
+					+ "Type \"exit\" to exit the program.\n"
+					+ "Please type your command: ";
 			while(!text.equals("exit")) {
-				System.out.println("Type \"help\" to list out all commands.");
-				System.out.println("Type \"exit\" to exit the program.");
-				System.out.print("Please type your command: ");
+				System.out.print(defaultPrint);
 				text = scanner.nextLine();
-				System.out.println("\nSearch Results: \n");
-				fileHandling.execute(text, reviewIndex, qaIndex);
 				System.out.println("");
+				fileHandling.execute(text, reviewIndex, qaIndex);
 			}
 		} catch (InputMismatchException e) {
 			System.out.println("Please try again with the appropriate format.");

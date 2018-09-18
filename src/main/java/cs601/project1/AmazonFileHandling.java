@@ -92,7 +92,7 @@ public class AmazonFileHandling {
 	 */
 	public void execute(String line, InvertedIndex reviewIndex, InvertedIndex qaIndex) {
 		if(line == "") {
-			System.out.println("Please try again with the correct format");
+			System.out.println("Please try again with the correct format.\n");
 			return;
 		} else if(line.equals("help")) {
 			System.out.println("Command List:\n"
@@ -104,38 +104,38 @@ public class AmazonFileHandling {
 			);
 			return;
 		} else if(line.equals("exit")) {
-			System.out.println("Exit program.");
+			System.out.println("Exit program.\n");
 			return;
 		}
 		String[] parts = line.split(" ");
 		if(parts.length != 2) {
-			System.out.println("Please try again with the correct format.");
+			System.out.println("Please try again with the correct format.\n");
 			return;
 		}
 		String command = parts[0].toLowerCase();
 		String text = parts[1].toLowerCase();
 		if(command.equals("find")) {
 			if(!reviewIndex.find(text) && !qaIndex.find(text)) {
-				System.out.println("ASIN is not found. Please try to find other ASIN.");
+				System.out.println("ASIN is not found. Please try to find other ASIN.\n");
 			}
 		} else if(command.equals("reviewsearch")) {
 			if(!reviewIndex.search(text)) {
-				System.out.println("Search term is not found. Please try other search term.");
+				System.out.println("Search term is not found. Please try other search term.\n");
 			}
 		} else if(command.equals("qasearch")) {
 			if(!qaIndex.search(text)) {
-				System.out.println("Search term is not found. Please try other search term.");
+				System.out.println("Search term is not found. Please try other search term.\n");
 			}
 		} else if(command.equals("reviewpartialsearch")) {
 			if(!reviewIndex.partialSearch(text)) {
-				System.out.println("Search term is not found. Please try other search term.");
+				System.out.println("Search term is not found. Please try other search term.\n");
 			}
 		} else if(command.equals("qapartialsearch")) {
 			if(!qaIndex.partialSearch(text)) {
-				System.out.println("Search term is not found. Please try other search term.");
+				System.out.println("Search term is not found. Please try other search term.\n");
 			}
 		} else {
-			System.out.println("Please try again with the correct format");
+			System.out.println("Please try again with the correct format.\n");
 		}
 	}
 	

@@ -10,7 +10,7 @@ package cs601.project1;
  * Contains getter and setter method for ASIN, product identifier.
  *
  */
-public abstract class CustomerEngagement {
+public class CustomerEngagement {
 	protected String asin;
 	
 	public CustomerEngagement() {
@@ -22,7 +22,7 @@ public abstract class CustomerEngagement {
 	}
 	
 	public String getASIN() {
-		return this.asin;
+		return asin;
 	}
 	
 	public void setASIN(String asin) {
@@ -30,6 +30,6 @@ public abstract class CustomerEngagement {
 	}
 	
 	public String toString() {
-		return "asin: " + asin;
+		return "ASIN: " + asin;
 	}
 }

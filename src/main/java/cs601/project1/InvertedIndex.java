@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * 
@@ -97,10 +98,10 @@ public class InvertedIndex {
 	 */
 	public boolean partialSearch(String term) {
 		boolean isExist = false;
-		for(Map.Entry<String, ArrayList<CustomerEngagementFrequency>> entry: termMap.entrySet()) {
-			String key = entry.getKey();
-			if(key.indexOf(term) != -1) {
-				printText(key);
+		TreeSet<String> termSet = new TreeSet<>(termMap.keySet());
+		for(String mapKey: termSet) {
+			if(mapKey.indexOf(term) != -1) {
+				printText(mapKey);
 				isExist = true;
 			}
 		}
@@ -239,7 +240,7 @@ public class InvertedIndex {
 	
 	/**
 	 * 
-	 * Helper function of partial search.
+	 * Helper function of search and partial search methods.
 	 * 
 	 * Prints customer engagement details
 	 * 
@@ -247,9 +248,9 @@ public class InvertedIndex {
 	 */
 	private void printText(String term) {
 		for(int i = 0; i < termMap.get(term).size(); i++) {
-			System.out.println("Matched term: " + term);
-			System.out.println("Freq: " + termMap.get(term).get(i).getFreq());
-			System.out.println(termMap.get(term).get(i));
+			System.out.println(termMap.get(term).get(i)
+					+ "Matched term: " + term + "\n" 
+					+ "Number of term occurence: " + termMap.get(term).get(i).getFreq() + "\n");
 		}
 	}
 }

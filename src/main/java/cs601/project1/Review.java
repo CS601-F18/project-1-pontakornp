@@ -55,6 +55,6 @@ public class Review extends CustomerEngagement{
 		return "Reviewer ID: " + reviewerID + "\n"
 				+ "ASIN: " + asin + "\n"
 				+ "Review text: " + reviewText + "\n"
-				+ "Overall Score: " + overall + "\n";
+				+ "Overall score: " + overall + "\n";
 	}
 }
