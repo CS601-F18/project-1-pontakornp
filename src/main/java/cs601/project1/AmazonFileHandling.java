@@ -30,7 +30,7 @@ public class AmazonFileHandling {
 	 */
 	public boolean isInputValid(String[] args) {
 		String msg = "";
-		if(args.length != 4 || !args[0].equals("-reviews") || !args[2].equals("-qa")) {
+		if(!args[0].equals("-reviews") || !args[2].equals("-qa")) {
 			msg += "Incorrect input format.\n";
 		}
 		if (args[1] == "" || !isFileExist(args[1])) {

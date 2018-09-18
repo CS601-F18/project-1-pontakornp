@@ -30,7 +30,7 @@ public class AmazonSearch {
 	 * @param args - expects the command -reviews <review_file_name> -qa <qa_file_name>
 	 */
 	public static void main(String[] args) {
-		if(args.length == 0) {
+		if(args.length != 4) {
 			System.out.println("Incorrect input format.\n"
 				+ "Please try again.");
 			return;
