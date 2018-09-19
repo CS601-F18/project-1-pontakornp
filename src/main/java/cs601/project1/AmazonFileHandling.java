@@ -99,8 +99,8 @@ public class AmazonFileHandling {
 					+ "\tfind <asin> - print all review and qa lists e.g. find 1234567890\n"
 					+ "\treviewsearch <term> - print all review lists that contain term e.g. reviewsearch hello\n"
 					+ "\tqasearch <term> - print all review lists that contain term e.g. qasearch hello\n"
-					+ "\treviewpartialsearch <term> - print all review lists that contain partially matched term e.g. partialreviewsearch hello\n"
-					+ "\tqapartialsearch <term> - print all review lists that contain partially matched term e.g. partialqasearch hello\n"
+					+ "\treviewpartialsearch <term> - print all review lists that contain partially matched term e.g. reviewpartialsearch hello\n"
+					+ "\tqapartialsearch <term> - print all review lists that contain partially matched term e.g. qapartialsearch hello\n"
 			);
 			return;
 		} else if(line.equals("exit")) {
